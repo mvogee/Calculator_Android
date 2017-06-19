@@ -25,7 +25,7 @@ public class CalcActivity extends Activity
     String runningNumber = "";
     String rightValueStr = "";
     String leftValueStr = "";
-    int result = 0;
+    long result = 0;
 
     TextView Display_Text;
 
@@ -193,16 +193,16 @@ public class CalcActivity extends Activity
 
                 switch (currentOperation) {
                     case ADD:
-                        result = Integer.parseInt(leftValueStr) + Integer.parseInt(rightValueStr);
+                        result = Long.parseLong(leftValueStr) + Long.parseLong(rightValueStr);
                         break;
                     case SUBTRACT:
-                        result = Integer.parseInt(leftValueStr) - Integer.parseInt(rightValueStr);
+                        result = Long.parseLong(leftValueStr) - Long.parseLong(rightValueStr);
                         break;
                     case DIVIDE:
-                        result = Integer.parseInt(leftValueStr) / Integer.parseInt(rightValueStr);
+                        result = Long.parseLong(leftValueStr) / Long.parseLong(rightValueStr);
                         break;
                     case MULTIPLY:
-                        result = Integer.parseInt(leftValueStr) * Integer.parseInt(rightValueStr);
+                        result = Long.parseLong(leftValueStr) * Long.parseLong(rightValueStr);
                         break;
                 }
                 leftValueStr = String.valueOf(result);
