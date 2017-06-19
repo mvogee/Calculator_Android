@@ -9,19 +9,38 @@ import android.widget.TextView;
 
 import java.io.Console;
 
-public class CalcActivity extends Activity {
+public class CalcActivity extends Activity
+{
+
+    public enum Operation
+    {
+        ADD,
+        SUBTRACT,
+        DIVIDE,
+        MULTIPLY,
+        EQUAL
+    }
+
+    Operation currentOperation = null;
+    String runningNumber = "";
+    String rightValueStr = "";
+    String leftValueStr = "";
+    int result = 0;
+
+    TextView Display_Text;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calc);
 
         button_listeners();
     }
 
-    void button_listeners() {
-        long Total;
-        TextView Display_Text = (TextView)findViewById(R.id.textView_Display);
+    void button_listeners()
+    {
+        Display_Text = (TextView)findViewById(R.id.textView_Display);
         ImageButton btnDivide = (ImageButton)findViewById(R.id.imageButton_divide);
         ImageButton btnMult = (ImageButton)findViewById(R.id.imageButton_multiply);
         ImageButton btnAdd = (ImageButton)findViewById(R.id.imageButton_addition);
@@ -41,101 +60,160 @@ public class CalcActivity extends Activity {
         numbers[8] = (Button)findViewById(R.id.button_8);
         numbers[9] = (Button)findViewById(R.id.button_9);
 
-        numbers[0].setOnClickListener(new View.OnClickListener() {
+        Display_Text.setText("");
+        numbers[0].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
-
+                numberPressed(0);
             }
         });
-        numbers[1].setOnClickListener(new View.OnClickListener() {
+        numbers[1].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("1");
+                numberPressed(1);
             }
         });
-        numbers[2].setOnClickListener(new View.OnClickListener(){
+        numbers[2].setOnClickListener(new View.OnClickListener()
+        {
            @Override
             public void onClick(View v){
-               System.out.println("2");
+               numberPressed(2);
            }
         });
-        numbers[3].setOnClickListener(new View.OnClickListener() {
+        numbers[3].setOnClickListener(new View.OnClickListener()
+        {
            @Override
             public void onClick(View v){
-               System.out.println("3");
+               numberPressed(3);
            }
         });
-        numbers[4].setOnClickListener(new View.OnClickListener(){
+        numbers[4].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("4");
+                numberPressed(4);
             }
         });
-        numbers[5].setOnClickListener(new View.OnClickListener(){
+        numbers[5].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("5");
+                numberPressed(5);
             }
         });
-        numbers[6].setOnClickListener(new View.OnClickListener(){
+        numbers[6].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("6");
+                numberPressed(6);
             }
         });
-        numbers[7].setOnClickListener(new View.OnClickListener(){
+        numbers[7].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("7");
+                numberPressed(7);
             }
         });
-        numbers[8].setOnClickListener(new View.OnClickListener(){
+        numbers[8].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("8");
+                numberPressed(8);
             }
         });
-        numbers[9].setOnClickListener(new View.OnClickListener(){
+        numbers[9].setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("9");
+                numberPressed(9);
             }
         });
-        btnAdd.setOnClickListener(new View.OnClickListener(){
+        btnAdd.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("add");
+                operatorPressed(Operation.ADD);
             }
         });
-        btnDivide.setOnClickListener(new View.OnClickListener(){
+        btnDivide.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("divide");
+                operatorPressed(Operation.DIVIDE);
             }
         });
-        btnequ.setOnClickListener(new View.OnClickListener(){
+        btnequ.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("equals");
+                operatorPressed(Operation.EQUAL);
             }
         });
-        btnMult.setOnClickListener(new View.OnClickListener(){
+        btnMult.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v){
-                System.out.println("multiply");
+                operatorPressed(Operation.MULTIPLY);
             }
         });
         btnSub.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                System.out.println("subtract");
+                operatorPressed(Operation.SUBTRACT);
             }
         });
         btnclear.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                System.out.println("clear");
+                rightValueStr = "";
+                leftValueStr = "";
+                runningNumber = "";
+                result = 0;
+                currentOperation = null;
+                Display_Text.setText("");
             }
         });
+    }
+    void numberPressed(int numPressed)
+    {
+        runningNumber += String.valueOf(numPressed);
+        Display_Text.setText(runningNumber);
+    }
+
+    void operatorPressed(Operation op)
+    {
+        if (currentOperation != null)
+        {
+            if (runningNumber != "") {
+                rightValueStr = runningNumber;
+                runningNumber = "";
+
+                switch (currentOperation) {
+                    case ADD:
+                        result = Integer.parseInt(leftValueStr) + Integer.parseInt(rightValueStr);
+                        break;
+                    case SUBTRACT:
+                        result = Integer.parseInt(leftValueStr) - Integer.parseInt(rightValueStr);
+                        break;
+                    case DIVIDE:
+                        result = Integer.parseInt(leftValueStr) / Integer.parseInt(rightValueStr);
+                        break;
+                    case MULTIPLY:
+                        result = Integer.parseInt(leftValueStr) * Integer.parseInt(rightValueStr);
+                        break;
+                }
+                leftValueStr = String.valueOf(result);
+                Display_Text.setText(leftValueStr);
+            }
+        }
+        else
+        {
+            leftValueStr = runningNumber;
+            runningNumber = "";
+        }
+        currentOperation = op;
     }
 }
