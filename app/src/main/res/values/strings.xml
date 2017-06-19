@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CoolCalc</string>
+    <string name="textView_display">250</string>
+</resources>
