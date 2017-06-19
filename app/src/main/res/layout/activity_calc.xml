@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:background="#FF38c5c6"
-            android:gravity="right"
+            android:gravity="end"
             android:orientation="vertical">
 
             <TextView
@@ -73,7 +73,7 @@
                 android:textSize="25sp" />
 
             <ImageButton
-                android:id="@+id/ImageButton_divide"
+                android:id="@+id/imageButton_divide"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -123,7 +123,7 @@
                 android:textSize="25sp" />
 
             <ImageButton
-                android:id="@+id/ImageButton_multiply"
+                android:id="@+id/imageButton_multiply"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -173,7 +173,7 @@
                 android:textSize="25sp" />
 
             <ImageButton
-                android:id="@+id/ImageButton_subtract"
+                android:id="@+id/imageButton_subtract"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
