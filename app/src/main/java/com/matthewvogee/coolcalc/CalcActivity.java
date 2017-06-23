@@ -25,7 +25,7 @@ public class CalcActivity extends Activity
     String runningNumber = "";
     String rightValueStr = "";
     String leftValueStr = "";
-    long result = 0;
+    double result = 0;
 
     TextView Display_Text;
 
@@ -48,6 +48,7 @@ public class CalcActivity extends Activity
         ImageButton btnequ = (ImageButton)findViewById(R.id.imageButton_equal);
         Button btnclear = (Button)findViewById(R.id.button_clear);
         Button[] numbers = new Button[10];
+        Button btnDecimal = (Button)findViewById(R.id.button_decimal);
 
         numbers[0] = (Button)findViewById(R.id.button_0); // all these need the actionlistener set
         numbers[1] = (Button)findViewById(R.id.button_1);
@@ -61,6 +62,33 @@ public class CalcActivity extends Activity
         numbers[9] = (Button)findViewById(R.id.button_9);
 
         Display_Text.setText("");
+
+        // this is for when the user wants to clear the input. hold down the del button
+        btnclear.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                rightValueStr = "";
+                leftValueStr = "";
+                runningNumber = "";
+                result = 0;
+                currentOperation = null;
+                Display_Text.setText("");
+                return true;
+            }
+        });
+        // this is going to backspace the input
+        btnclear.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                rightValueStr = "";
+                leftValueStr = "";
+                runningNumber = "";
+                result = 0;
+                currentOperation = null;
+                Display_Text.setText("");
+            }
+        });
+
         numbers[0].setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -163,17 +191,6 @@ public class CalcActivity extends Activity
             @Override
             public void onClick(View v){
                 operatorPressed(Operation.SUBTRACT);
-            }
-        });
-        btnclear.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                rightValueStr = "";
-                leftValueStr = "";
-                runningNumber = "";
-                result = 0;
-                currentOperation = null;
-                Display_Text.setText("");
             }
         });
     }
