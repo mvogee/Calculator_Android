@@ -18,13 +18,15 @@ public class CalcActivity extends Activity
         SUBTRACT,
         DIVIDE,
         MULTIPLY,
+        DECIMAL,
         EQUAL
     }
 
     Operation currentOperation = null;
     String runningNumber = "";
-    String rightValueStr = "";
-    String leftValueStr = "";
+//    String rightValueStr = "";
+//    String leftValueStr = "";
+    // going to store full thing as a string and then compute answer after = is pressed taking into account oop
     double result = 0;
 
     TextView Display_Text;
@@ -50,7 +52,7 @@ public class CalcActivity extends Activity
         Button[] numbers = new Button[10];
         Button btnDecimal = (Button)findViewById(R.id.button_decimal);
 
-        numbers[0] = (Button)findViewById(R.id.button_0); // all these need the actionlistener set
+        numbers[0] = (Button)findViewById(R.id.button_0);
         numbers[1] = (Button)findViewById(R.id.button_1);
         numbers[2] = (Button)findViewById(R.id.button_2);
         numbers[3] = (Button)findViewById(R.id.button_3);
@@ -67,8 +69,8 @@ public class CalcActivity extends Activity
         btnclear.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                rightValueStr = "";
-                leftValueStr = "";
+//                rightValueStr = "";
+//                leftValueStr = "";
                 runningNumber = "";
                 result = 0;
                 currentOperation = null;
@@ -80,12 +82,14 @@ public class CalcActivity extends Activity
         btnclear.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                rightValueStr = "";
-                leftValueStr = "";
-                runningNumber = "";
-                result = 0;
-                currentOperation = null;
-                Display_Text.setText("");
+                int len = runningNumber.length();
+//                rightValueStr = "";
+//                leftValueStr = "";
+                if (len - 1 > 0)
+                    runningNumber = runningNumber.substring(0, len - 1);
+                else
+                    runningNumber = "";
+                Display_Text.setText(runningNumber);
             }
         });
 
@@ -193,6 +197,12 @@ public class CalcActivity extends Activity
                 operatorPressed(Operation.SUBTRACT);
             }
         });
+        btnDecimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                operatorPressed(Operation.DECIMAL);
+            }
+        });
     }
     void numberPressed(int numPressed)
     {
@@ -202,35 +212,64 @@ public class CalcActivity extends Activity
 
     void operatorPressed(Operation op)
     {
-        if (currentOperation != null)
-        {
-            if (runningNumber != "") {
-                rightValueStr = runningNumber;
-                runningNumber = "";
-
-                switch (currentOperation) {
-                    case ADD:
-                        result = Long.parseLong(leftValueStr) + Long.parseLong(rightValueStr);
-                        break;
-                    case SUBTRACT:
-                        result = Long.parseLong(leftValueStr) - Long.parseLong(rightValueStr);
-                        break;
-                    case DIVIDE:
-                        result = Long.parseLong(leftValueStr) / Long.parseLong(rightValueStr);
-                        break;
-                    case MULTIPLY:
-                        result = Long.parseLong(leftValueStr) * Long.parseLong(rightValueStr);
-                        break;
-                }
-                leftValueStr = String.valueOf(result);
-                Display_Text.setText(leftValueStr);
-            }
+        switch (op) {
+            case ADD:
+                runningNumber += "+";
+                break;
+            case SUBTRACT:
+                runningNumber += "-";
+                break;
+            case DIVIDE:
+                runningNumber += "/";
+                break;
+            case MULTIPLY:
+                runningNumber += "*";
+                break;
+            case DECIMAL:
+                runningNumber += ".";
+                break;
+            case EQUAL:
+                result = get_result(runningNumber); // make this
+                runningNumber = String.valueOf(result);
+                break;
         }
-        else
-        {
-            leftValueStr = runningNumber;
-            runningNumber = "";
-        }
-        currentOperation = op;
+        Display_Text.setText(runningNumber);
+//        if (currentOperation != null)
+//        {
+//            if (runningNumber != "") {
+//                rightValueStr = runningNumber;
+//                runningNumber = "";
+//
+//                switch (currentOperation) {
+//                    case ADD:
+//                        result = Long.parseLong(leftValueStr) + Long.parseLong(rightValueStr);
+//                        break;
+//                    case SUBTRACT:
+//                        result = Long.parseLong(leftValueStr) - Long.parseLong(rightValueStr);
+//                        break;
+//                    case DIVIDE:
+//                        result = Long.parseLong(leftValueStr) / Long.parseLong(rightValueStr);
+//                        break;
+//                    case MULTIPLY:
+//                        result = Long.parseLong(leftValueStr) * Long.parseLong(rightValueStr);
+//                        break;
+//                }
+//                leftValueStr = String.valueOf(result);
+//                Display_Text.setText(leftValueStr);
+//            }
+//        }
+//        else
+//        {
+//            leftValueStr = runningNumber;
+//            runningNumber = "";
+//        }
+//        currentOperation = op;
     }
+
+    double get_result(String problem) {
+        double result;
+        result = 0;
+        return (result);
+    }
+
 }
