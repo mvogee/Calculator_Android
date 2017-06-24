@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import java.util.ArrayList;
 
 import java.io.Console;
 
@@ -22,9 +23,11 @@ public class CalcActivity extends Activity
         EQUAL
     }
 
-    Operation currentOperation = null;
-    String runningNumber = "";
-//    String rightValueStr = "";
+    Operation currentOperation = null; // not being used currentl
+    String runningNumber = ""; // the whole current display text
+    ArrayList<Double> numbers = new ArrayList<Double>(); // store all the numbers here. these will have to be manipulated by delete as well
+    ArrayList<String> operators = new ArrayList<String>(); // store all operators here. also manipulated by delete
+    String currentNumber = ""; // will be used to hold the current number being entered.
 //    String leftValueStr = "";
     // going to store full thing as a string and then compute answer after = is pressed taking into account oop
     double result = 0;
