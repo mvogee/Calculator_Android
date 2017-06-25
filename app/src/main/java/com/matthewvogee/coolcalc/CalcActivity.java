@@ -25,9 +25,6 @@ public class CalcActivity extends Activity
 
     Operation currentOperation = null; // not being used currentl
     String runningNumber = ""; // the whole current display text
-    ArrayList<Double> numbers = new ArrayList<Double>(); // store all the numbers here. these will have to be manipulated by delete as well
-    ArrayList<String> operators = new ArrayList<String>(); // store all operators here. also manipulated by delete
-    String currentNumber = ""; // will be used to hold the current number being entered.
 //    String leftValueStr = "";
     // going to store full thing as a string and then compute answer after = is pressed taking into account oop
     double result = 0;
@@ -232,7 +229,7 @@ public class CalcActivity extends Activity
                 runningNumber += ".";
                 break;
             case EQUAL:
-                result = get_result(runningNumber); // make this
+                result = get_result(runningNumber.toCharArray(), runningNumber.length());
                 runningNumber = String.valueOf(result);
                 break;
         }
@@ -269,9 +266,41 @@ public class CalcActivity extends Activity
 //        currentOperation = op;
     }
 
-    double get_result(String problem) {
+    double get_result(char[] problem, int length) {
+        ArrayList<Double> numlist = new ArrayList<Double>(); // store all the numbers here. these will have to be manipulated by delete as well
+        ArrayList<Enum> operators = new ArrayList<Enum>(); // store all operators here. also manipulated by delete
+        String currentNumber = ""; // will be used to hold the current number being entered.
         double result;
+
         result = 0;
+        try {
+            for (int i = 0; i < length; i++) {
+                switch (problem[i]) {
+                    case '+':
+                        operators.add(Operation.ADD);
+                        numlist.add(Double.valueOf(currentNumber));
+                        break;
+                    case '-':
+                        operators.add(Operation.SUBTRACT);
+                        numlist.add(Double.valueOf(currentNumber));
+                        break;
+                    case '*':
+                        operators.add(Operation.MULTIPLY);
+                        numlist.add(Double.valueOf(currentNumber));
+                        break;
+                    case '/':
+                        operators.add(Operation.DIVIDE);
+                        numlist.add(Double.valueOf(currentNumber));
+                        break;
+                    default:
+                        currentNumber += problem[i];
+                        break;
+                } // switch
+            } // for
+        }
+        catch(Exception ex) {
+            result = 0;
+        }
         return (result);
     }
 
